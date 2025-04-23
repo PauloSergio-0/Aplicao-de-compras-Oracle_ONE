@@ -30,7 +30,7 @@ public class Menu {
                     if(meuCartao.realizarCompra(tentativaCompra.getValorProduto())){
                         listaCompras.add(tentativaCompra);
                     } else {
-                        System.out.println("limite insuficiente: " + meuCartao.getLimite());
+                        System.out.println("limite insuficiente: " + meuCartao.getSaldo());
                     }
                 } else  if( opcao == 2) {
                     Collections.sort(listaCompras);
