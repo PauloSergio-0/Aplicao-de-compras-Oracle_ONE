@@ -1,16 +1,13 @@
 package br.com.oracleone.apiclacaocompras.service;
 
 import br.com.oracleone.apiclacaocompras.models.Cartao;
-import br.com.oracleone.apiclacaocompras.models.Compras;
+import br.com.oracleone.apiclacaocompras.models.Compra;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
     private Cartao meuCartao;
-    private final ArrayList<Compras> listaCompras = new ArrayList<>();
+    private final ArrayList<Compra> listaCompras = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
 
 
@@ -28,8 +25,21 @@ public class Menu {
                 scanner.nextLine();
 
                 if (opcao == 1) {
-                    meuCartao.realizarCompra(9);
-                } else {
+                    var tentativaCompra = criaCompra();
+
+                    if(meuCartao.realizarCompra(tentativaCompra.getValorProduto())){
+                        listaCompras.add(tentativaCompra);
+                    } else {
+                        System.out.println("limite insuficiente: " + meuCartao.getLimite());
+                    }
+                } else  if( opcao == 2) {
+                    Collections.sort(listaCompras);
+                    for(Compra item: listaCompras){
+                        System.out.println(item);
+                    }
+
+                }else {
+                    System.out.println("Saindo....");
                     break;
                 }
 
@@ -47,7 +57,7 @@ public class Menu {
     private Cartao criarConta() {
         while (true) {
             try {
-                System.out.println("Qual o limite do Cartão: ");
+                System.out.println("\nQual o limite do Cartão: ");
                 double limiteCartao = scanner.nextDouble();
                 scanner.nextLine();
 
@@ -61,6 +71,28 @@ public class Menu {
                 scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("Algo deu errado: " + e.getMessage());
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private Compra criaCompra(){
+        while (true){
+            try {
+                System.out.println("\nDescrição do Produto: ");
+                String descricao = scanner.nextLine();
+
+                System.out.println("Valor do produto");
+                double valorProduto = scanner.nextDouble();
+                scanner.nextLine();
+
+                return new Compra(descricao, valorProduto);
+
+            }catch (InputMismatchException e){
+                System.out.println("Erro ao capturar valores");
+                scanner.nextLine();
+            }catch (Exception e){
+                System.out.println("Erro ao executar operacao: " + e.getMessage());
                 scanner.nextLine();
             }
         }

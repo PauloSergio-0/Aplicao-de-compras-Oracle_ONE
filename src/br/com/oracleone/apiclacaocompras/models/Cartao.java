@@ -11,14 +11,15 @@ public class Cartao {
 
 
     public boolean realizarCompra(double valorComprar){
-        if(this.limite > valorComprar) {
-            this.limite =- valorComprar;
+        if(this.limite >= valorComprar) {
+             this.limite = (this.limite - valorComprar);
             return true;
         }else {
-            System.out.println("Saldo insuficiente");
             return false;
         }
     }
 
-
+    public double getLimite() {
+        return limite;
+    }
 }

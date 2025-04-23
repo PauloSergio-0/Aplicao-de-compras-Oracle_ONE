@@ -1,10 +1,10 @@
 package br.com.oracleone.apiclacaocompras.models;
 
-public class Compras implements Comparable<Compras>{
+public class Compra implements Comparable<Compra>{
     private String descricaoProduto;
     private double valorProduto;
 
-    public Compras(String descricaoProduto, double valorProduto) {
+    public Compra(String descricaoProduto, double valorProduto) {
         this.descricaoProduto = descricaoProduto;
         this.valorProduto = valorProduto;
     }
@@ -14,7 +14,15 @@ public class Compras implements Comparable<Compras>{
     }
 
     @Override
-    public int compareTo(Compras o) {
+    public int compareTo(Compra o) {
         return Double.compare(this.getValorProduto(),o.getValorProduto());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("""
+                Descricao: %s
+                Valor produto: %.2f
+                """, this.descricaoProduto, this.valorProduto);
     }
 }
